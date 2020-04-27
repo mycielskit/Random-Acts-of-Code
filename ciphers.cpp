@@ -55,7 +55,9 @@ string a1z26(string input)
     {
         i = c - 64;
         out += to_string(i);
+        out += "-";
     }
+    out.pop_back();
     return out;
 }
 
@@ -93,6 +95,15 @@ string polybius(string input)
     return out;
 }
 
+string affine(string input, int key = 1, int shift = 3)
+{
+    input = toUpperCase(input);
+    string out = "";
+    for(auto c : input)
+        out += ((c - 64) * key + shift) % 26 == 0 ? 'Z' : ((c - 64) * key + shift) % 26 + 64;
+    return out;
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
@@ -115,6 +126,7 @@ int main()
         cout << "a1z26: " << a1z26(b) << endl;
         cout << "atbash: " << atbash(b) << endl;
         cout << "polybius: " << polybius(b) << endl;
+        cout << "affine: " << affine(b, shift, shift) << endl;
     }
     return 0;
 }
