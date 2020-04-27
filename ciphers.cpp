@@ -76,8 +76,8 @@ int main()
     short shift;
     while(1)
     {
-        //cin >> pass;
-        //cin >> shift;
+        cin >> pass;
+        cin >> shift;
         b = "";
         a = "";
         do
@@ -85,10 +85,10 @@ int main()
             b += a;
             cin >> a;
         } while (a != "endt");
-        //cout << vigenere(b, pass) << endl;
-        //cout << caesar(a, shift) << endl;
-        //cout << a1z26(b) << endl;
-        //cout << atbash(b) << endl;
+        cout << "vigenere: " << vigenere(b, pass) << endl;
+        cout << "caesar: " << caesar(a, shift) << endl;
+        cout << "a1z26: " << a1z26(b) << endl;
+        cout << "atbash: " << atbash(b) << endl;
     }
     return 0;
 }
