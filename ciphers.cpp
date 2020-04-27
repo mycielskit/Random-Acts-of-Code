@@ -23,6 +23,8 @@ string toUpperCase(string a)
 
 string vigenere(string input, string pass)
 {
+    input = toUpperCase(input);
+    pass = toUpperCase(pass);
     for(int i = 0; i < input.size(); i++)
     {
         input[i] += pass[i % pass.size()] - 65;//Caesar cipher with a left shift of the corresponding letter in the password's number where a = 0
@@ -34,6 +36,7 @@ string vigenere(string input, string pass)
 
 string caesar(string input, short shift = 3)
 {
+    input = toUpperCase(input);
     for(int i = 0; i < input.size(); i++)
     {
         input[i] += shift;
@@ -45,6 +48,7 @@ string caesar(string input, short shift = 3)
 
 string a1z26(string input)
 {
+    input = toUpperCase(input);
     short i;
     string out = "";
     for(auto c : input)
@@ -57,6 +61,7 @@ string a1z26(string input)
 
 string atbash(string input)
 {
+    input = toUpperCase(input);
     string out = "";
     for(auto c : input)
         out += 155 - c;
@@ -80,8 +85,6 @@ int main()
             b += a;
             cin >> a;
         } while (a != "endt");
-        b = toUpperCase(b);
-        //pass = toUpperCase(pass);
         //cout << vigenere(b, pass) << endl;
         //cout << caesar(a, shift) << endl;
         //cout << a1z26(b) << endl;
