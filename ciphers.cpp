@@ -37,11 +37,11 @@ string vigenere(string input, string pass)
 string caesar(string input, short shift = 3)
 {
     input = toUpperCase(input);
-    for(int i = 0; i < input.size(); i++)
+    for(auto c : input)
     {
-        input[i] += shift;
-        if(input[i] > 90)
-            input[i] -= 26;
+        c += shift;
+        if(c > 90)
+            c -= 26;
     }
     return input;
 }
@@ -68,6 +68,31 @@ string atbash(string input)
     return out;
 }
 
+string polybius(string input)
+{
+    input = toUpperCase(input);
+    string out = "";
+    for(auto c : input)
+    {
+        if(c < 73)
+        {
+            out += ((c - 65) / 5) + 1 ? ((c - 65) / 5) + 49 : '5';
+            out += (c + 1) % 5 == 0 ? '5' : ((c - 64) % 5) + 48;
+            out += " ";
+        }
+        else if(c > 74)
+        {
+            out += ((c - 66) / 5) + 1 ? ((c - 66) / 5) + 49 : '5';
+            out += c % 5 == 0 ? '5' : (c % 5) + 48;
+            out += " ";
+        }
+        else
+            out += "24 ";
+    }
+    out.pop_back();
+    return out;
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
@@ -86,9 +111,10 @@ int main()
             cin >> a;
         } while (a != "endt");
         cout << "vigenere: " << vigenere(b, pass) << endl;
-        cout << "caesar: " << caesar(a, shift) << endl;
+        cout << "caesar: " << caesar(b, shift) << endl;
         cout << "a1z26: " << a1z26(b) << endl;
         cout << "atbash: " << atbash(b) << endl;
+        cout << "polybius: " << polybius(b) << endl;
     }
     return 0;
 }
