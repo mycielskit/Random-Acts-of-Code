@@ -21,10 +21,8 @@ string toUpperCase(string a)
     return out;
 }//switches plaintext to uppercase and throws out any non-letters, including numbers
 
-string vigenere(string pass, string input)
+string vigenere(string input, string pass)
 {
-    pass = toUpperCase(pass);
-    input = toUpperCase(input);
     for(int i = 0; i < input.size(); i++)
     {
         input[i] += pass[i % pass.size()] - 65;//Caesar cipher with a left shift of the corresponding letter in the password's number where a = 0
@@ -34,14 +32,47 @@ string vigenere(string pass, string input)
     return input;
 }
 
+string caesar(string input, short shift = 3)
+{
+    for(int i = 0; i < input.size(); i++)
+    {
+        input[i] += shift;
+        if(input[i] > 90)
+            input[i] -= 26;
+    }
+    return input;
+}
+
+string a1z26(string input)
+{
+    short i;
+    string out = "";
+    for(auto c : input)
+    {
+        i = c - 64;
+        out += to_string(i);
+    }
+    return out;
+}
+
+string atbash(string input)
+{
+    string out = "";
+    for(auto c : input)
+        out += 155 - c;
+    return out;
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     string a, b, pass;
+    short shift;
     while(1)
     {
-        cin >> pass;
+        //cin >> pass;
+        //cin >> shift;
         b = "";
         a = "";
         do
@@ -49,7 +80,12 @@ int main()
             b += a;
             cin >> a;
         } while (a != "endt");
-        cout << vigenere(pass, b) << endl;
+        b = toUpperCase(b);
+        //pass = toUpperCase(pass);
+        //cout << vigenere(b, pass) << endl;
+        //cout << caesar(a, shift) << endl;
+        //cout << a1z26(b) << endl;
+        //cout << atbash(b) << endl;
     }
     return 0;
 }
