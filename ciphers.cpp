@@ -27,19 +27,19 @@ string vigenere(string input, string pass)
     pass = toUpperCase(pass);
     for(int i = 0; i < input.size(); i++)
     {
-        input[i] += pass[i % pass.size()] - 65;//Caesar cipher with a left shift of the corresponding letter in the password's number where a = 0
+        input[i] += pass[i % pass.size()] - 65;//Caesar cipher with a left key of the corresponding letter in the password's number where a = 0
         if(input[i] > 90)
             input[i] -= 26;
     }
     return input;
 }
 
-string caesar(string input, short shift = 3)
+string caesar(string input, short key = 3)
 {
     input = toUpperCase(input);
     for(auto c : input)
     {
-        c += shift;
+        c += key;
         if(c > 90)
             c -= 26;
     }
@@ -95,13 +95,33 @@ string polybius(string input)
     return out;
 }
 
-string affine(string input, int key = 1, int shift = 3)
+string affine(string input, int key1 = 1, int key2 = 3)
 {
     input = toUpperCase(input);
     string out = "";
     for(auto c : input)
-        out += ((c - 64) * key + shift) % 26 == 0 ? 'Z' : ((c - 64) * key + shift) % 26 + 64;
+        out += ((c - 64) * key1 + key2) % 26 == 0 ? 'Z' : ((c - 64) * key1 + key2) % 26 + 64;
     return out;
+}
+
+string rail_fence(string input, int key = 3)
+{
+    input = toUpperCase(input);
+    int tick = 0;
+    string out[key];
+    for(int i = 0; i < key; i++)
+        out[i] = "";
+    bool direction = false;
+    for(int i = 0; tick < input.size(); tick++)
+    {
+        out[i] += input[tick];
+        i += direction ? -1 : 1;
+        if(i == key - 1 || !i)
+            direction = !direction;
+    }
+    for(int i = 1; i < key; i++)
+        out[0] += out[i];
+    return out[0];
 }
 
 int main()
@@ -109,11 +129,11 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     string a, b, pass;
-    short shift;
+    short key;
     while(1)
     {
         cin >> pass;
-        cin >> shift;
+        cin >> key;
         b = "";
         a = "";
         do
@@ -122,11 +142,12 @@ int main()
             cin >> a;
         } while (a != "endt");
         cout << "vigenere: " << vigenere(b, pass) << endl;
-        cout << "caesar: " << caesar(b, shift) << endl;
+        cout << "caesar: " << caesar(b, key) << endl;
         cout << "a1z26: " << a1z26(b) << endl;
         cout << "atbash: " << atbash(b) << endl;
         cout << "polybius: " << polybius(b) << endl;
-        cout << "affine: " << affine(b, shift, shift) << endl;
+        cout << "affine: " << affine(b, key, key) << endl;
+        cout << "rail fence: " << rail_fence(b, key) << endl;
     }
     return 0;
 }
