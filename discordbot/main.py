@@ -30,16 +30,18 @@ async def on_message(msg):
     cmd = msg.content[1:]
     if cmd == "exit":
         botcommands = client.get_channel(X)
-        await botcommands.send(f'{Author}')
-        await botcommands.send('Going offline. See ya!')
-        await client.change_presence(status=discord.Status.invisible)
-        await client.close()
+        if msg.channel == botcommands:
+            await botcommands.send(f'{Author}')
+            await botcommands.send('Going offline. See ya!')
+            await client.change_presence(status=discord.Status.invisible)
+            await client.close()
+        else:
+            await msg.channel.send(f'Incorrect channel, {msg.author.name}, please use #bot-commands to turn off the bot.')
         return
     elif cmd == "test":
         await msg.channel.send(f'{Author}')
         server = client.get_guild(X)
-        botcommands = client.get_channel(X)
-        await botcommands.send(len(server.members))
+        await msg.channel.send(len(server.members))
         return
 
 
