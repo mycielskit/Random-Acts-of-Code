@@ -1,5 +1,3 @@
-# https://discord.com/oauth2/authorize?client_id=708638946179022878&scope=bot&permissions=8
-
 import discord
 
 token = open("token.txt", "r").read()
